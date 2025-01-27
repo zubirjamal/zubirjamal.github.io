@@ -16,7 +16,7 @@ timezone: Asia/Kuala_Lumpur
 
 title: Zubir Tech # the main title
 
-tagline: Jom automate rumah korang # it will display as the subtitle
+tagline: Jom automate rumah korang 🏡 # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   Perkongsian berkenaan Home Assistant khusus bagi pengguna di Malaysia
@@ -60,7 +60,7 @@ webmaster_verifications:
 # Web Analytics Settings
 analytics:
   google:
-    id: # fill in your Google Analytics ID
+    id: G-88YD8PCN61 # fill in your Google Analytics ID
   goatcounter:
     id: # fill in your GoatCounter ID
   umami:
@@ -110,10 +110,10 @@ toc: true
 
 comments:
   # Global switch for the post-comment system. Keeping it empty means disabled.
-  provider: # [disqus | utterances | giscus]
+  provider: disqus # [disqus | utterances | giscus]
   # The provider options are as follows:
   disqus:
-    shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+    shortname: zubirjamal # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
   # utterances settings › https://utteranc.es/
   utterances:
     repo: # <gh-username>/<repo>
