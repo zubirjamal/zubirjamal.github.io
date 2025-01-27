@@ -1,5 +1,5 @@
 ---
-title: Home Assistant
+title: Home Assistant 🏡
 description: Apa itu Home Assistant
 date: 2025-01-25 12:00:00 +0800
 categories: [Home Assistant]
