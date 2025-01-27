@@ -22,11 +22,11 @@ Sistem ni **open-source**, maksudnya ia percuma dan sentiasa dikemas kini oleh k
    Alexa, Google Assistant, atau Siri pun boleh digabungkan dengan Home Assistant.  
 
 ### Macam Mana Nak Mula?  
-- **Kena ada Raspberry Pi?**  
+- **Kena ada Raspberry Pi?**  \
   Ni option yang paling popular. Tapi boleh juga guna platform lain macam mini PC ataupun virtual machine (VM).
 - **Install Home Assistant** \
-  Follow je panduan daripada ![Home-Assistant.io](https://www.home-assistant.io/installation/), tak susah pun.
-- **Tambah Peranti Pintar**  
+  Follow je panduan daripada [Home-Assistant.io](https://www.home-assistant.io/installation/), tak susah pun.
+- **Tambah Peranti Pintar**  \
   Dah siap setup? Mulakan dengan tambah peranti macam lampu pintar atau plug pintar yang korang ada.. tak kira brand apa.
 
 Dengan Home Assistant, kita bebas untuk lakukan bermacam-macam automasi ikut mana yang kita suka. 
