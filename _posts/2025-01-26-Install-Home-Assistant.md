@@ -9,7 +9,9 @@ author: zubirjamal
 # Install Home Assistant?
 
 Kalau korang tengok kat [Home-Assistant.io](https://www.home-assistant.io/installation/), ada memacam cara nak install Home Assistant (HA) ni.
-Tapi kalau korang just nak cuba-cuba install, boleh guna method ni: (kot laa belum decide nak set dedicated hardware macam RaspberryPi ke, mini PC ke..)
+Tapi kalau korang just nak cuba-cuba install, boleh guna method ni.
+
+(kot laa belum decide nak set dedicated hardware macam RaspberryPi ke, mini PC ke..)
 
 ## Setup HA kat Windows PC
 1. Guna Hyper-V pada saya cara paling ringkas. Cuma limitation pada Hyper-V ni dia tak support USB (kalau nak guna USB Zigbee ke)
@@ -28,13 +30,14 @@ Tapi kalau korang just nak cuba-cuba install, boleh guna method ni: (kot laa bel
 1. Step kat atas ni merupakan step 'ringkas'
 2. Untuk step satu per satu, leh refer guide kat bawah ni
 
-Guide untuk Hyper-V \
-https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v
+**Guide untuk Hyper-V** \
+[https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v)
 
-Guide untuk Windows \
-https://www.home-assistant.io/installation/windows
+**Guide untuk Windows** \
+[https://www.home-assistant.io/installation/windows](https://www.home-assistant.io/installation/windows)
 
-Guide untuk MacOS \
-https://www.home-assistant.io/installation/macos
+**Guide untuk MacOS** \
+[https://www.home-assistant.io/installation/macos](https://www.home-assistant.io/installation/macos)
+
 
 Selamat mencuba ~
