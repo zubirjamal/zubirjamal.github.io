@@ -4,9 +4,8 @@ description: Apa itu Home Assistant
 date: 2025-01-25 12:00:00 +0800
 categories: [Home Assistant]
 tags: [homeassistant, smarthome]
-author: zubirjamal
 ---
-### Apa Itu Home Assistant?  
+# Apa Itu Home Assistant?  
 
 Home Assistant ialah platform automasi rumah pintar yang membolehkan kita kawal dan pantau pelbagai peranti dalam satu tempat. Tak kiralah lampu, kipas, aircond, CCTV, atau peranti pintar lain, semuanya boleh digabungkan dan dikawal melalui satu sistem je.  
 
