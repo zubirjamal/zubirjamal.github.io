@@ -57,6 +57,9 @@ webmaster_verifications:
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
 
+# Adsense
+google_ad_client: ca-pub-3112414602070691
+
 # Web Analytics Settings
 analytics:
   google:
