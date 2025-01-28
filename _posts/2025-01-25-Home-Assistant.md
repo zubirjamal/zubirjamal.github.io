@@ -4,6 +4,7 @@ description: Apa itu Home Assistant
 date: 2025-01-25 12:00:00 +0800
 categories: [Home Assistant]
 tags: [homeassistant, smarthome]
+layout: mypost
 author: zubirjamal
 ---
 # Apa Itu Home Assistant?  
