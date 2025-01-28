@@ -4,6 +4,7 @@ description: Macamana nak mula
 date: 2025-01-26 12:00:00 +0800
 categories: [Home Assistant]
 tags: [homeassistant, smarthome]
+layout: mypost
 author: zubirjamal
 ---
 # Install Home Assistant?
