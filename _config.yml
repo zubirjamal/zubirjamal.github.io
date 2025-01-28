@@ -64,6 +64,11 @@ webmaster_verifications:
 # Adsense
 google_ad_client: ca-pub-3112414602070691
 
+google_adsense:
+  client_id: ca-pub-3112414602070691        # adsense client id, ex: ca-pub-0000000000000000
+  slot_id: 0000000000           # adsense slot id, ex: 0000000000
+  enabled: true
+  
 # Web Analytics Settings
 analytics:
   google:
