@@ -6,6 +6,7 @@ categories: [HA Guide]
 tags: [homeassistant, smarthome, installation]
 layout: mypost
 author: zubirjamal
+image: "https://github.com/user-attachments/assets/b195e039-be30-4184-8822-03ac2428a035"
 ---
 # Install Home Assistant?
 
