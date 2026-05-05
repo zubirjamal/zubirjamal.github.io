@@ -6,9 +6,8 @@ categories: [Home Assistant]
 tags: [homeassistant, smarthome]
 layout: mypost
 author: zubirjamal
+image: "https://github.com/user-attachments/assets/0f296ae1-3915-48ec-8890-c66221ee9b94"
 ---
-<img width="80%" alt="Home Assistant" src="https://github.com/user-attachments/assets/9f181358-6f5c-4a1d-8b6b-b810b1214356" />
-
 # Apa Itu Home Assistant?  
 
 Home Assistant ialah platform automasi rumah pintar yang membolehkan kita kawal dan pantau pelbagai peranti dalam satu tempat. Tak kiralah lampu, kipas, aircond, CCTV, atau peranti pintar lain, semuanya boleh digabungkan dan dikawal melalui satu sistem je.  
