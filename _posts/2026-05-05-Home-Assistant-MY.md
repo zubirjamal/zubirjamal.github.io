@@ -6,6 +6,7 @@ categories: [HA Guide]
 tags: [homeassistant, smarthome, self-hosting, malaysia, integrations, lokal]
 layout: mypost
 author: zubirjamal
+image: "https://github.com/user-attachments/assets/78c5ef8e-aeb2-4680-a482-d27a436b90dc"
 ---
 # The "Lokal" Advantage: Home Assistant Integrations Built by Malaysians
 
