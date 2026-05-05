@@ -134,9 +134,9 @@ comments:
   # Giscus options › https://giscus.app
   giscus:
     repo: zubirjamal/zubirjamal.github.io
-    repo_id: R_kgDONwBdgQ
-    category: Giscus
-    category_id: DIC_kwDONwBdgc4CmZc8
+    repo_id: R_kgDOSU6Faw
+    category: General
+    category_id: DIC_kwDOSU6Fa84C8YkR
     mapping: # optional, default to 'pathname'
     strict: # optional, default to '0'
     input_position: # optional, default to 'bottom'
