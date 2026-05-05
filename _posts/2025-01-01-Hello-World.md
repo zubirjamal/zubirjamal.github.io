@@ -7,13 +7,14 @@ tags: [update, blog]
 layout: mypost
 author: zubirjamal
 pin: true
+image: "https://github.com/user-attachments/assets/84c6f286-5c7e-4b99-b6f5-2640284cafcc"
 ---
 # Selamat Datang | Welcome
 
 ### Assalamualaikum
 ### Selamat tahun baru 2025 🎉 
 
-Mula skali, terima kasih pada korang yang dah subscribe channel YouTube @ZubirJamal. \
+Memula skali, terima kasih pada korang yang dah subscribe channel YouTube @ZubirJamal. \
 Moga perkongsian kat situ sedikit sebanyak memberi manfaat pada korang semua.
 
 [![YouTube](https://img.shields.io/youtube/channel/subscribers/UCJYvY4zLKi6KKbUvOplvQew)](https://zbrj.ml/subscribe)
