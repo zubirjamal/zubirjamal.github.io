@@ -6,6 +6,7 @@ categories: [HA Guide]
 tags: [homeassistant, smarthome, self-hosting, malaysia]
 layout: mypost
 author: zubirjamal
+image: "https://github.com/user-attachments/assets/172c2143-733f-4466-a28b-0657264d5c50"
 ---
 
 # Should I Hire Someone to Set Up My Home Assistant? 💼
