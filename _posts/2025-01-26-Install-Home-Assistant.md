@@ -6,7 +6,7 @@ categories: [HA Guide]
 tags: [homeassistant, smarthome, installation]
 layout: mypost
 author: zubirjamal
-image: "https://github.com/user-attachments/assets/b195e039-be30-4184-8822-03ac2428a035"
+image: "https://github.com/user-attachments/assets/aa051b5a-7fbc-439a-b34a-d9f8c104a579"
 ---
 # Install Home Assistant?
 
@@ -41,5 +41,9 @@ Tapi kalau korang just nak cuba-cuba install, boleh guna method ni.
 **Guide untuk MacOS** \
 [https://www.home-assistant.io/installation/macos](https://www.home-assistant.io/installation/macos)
 
+## BONUS
+Visual ni cara nak setup kat RaspberryPi
+
+<img width="2816" height="1536" alt="ha-lego" src="https://github.com/user-attachments/assets/b195e039-be30-4184-8822-03ac2428a035" />
 
 Selamat mencuba ~
