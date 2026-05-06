@@ -61,3 +61,8 @@ Hiring is for simple scheduling. DIY is for a home that actually thinks.
 There is a massive amount of satisfaction in being your own "digital plumber." When you build it yourself—as I have with my own custom n8n workflows and local LLMs. You gain a skillset that ensures your home stays smart long after the installer has cashed your check.
 
 **Start small, keep the WAF high, and own your logic.**
+
+<img width="1024" height="576" alt="ha-dashboard" src="https://github.com/user-attachments/assets/324bea9a-fcb7-4366-9cd9-00627a2a5f8d" />
+
+> This isn't just a dashboard; it's the nervous system of my home. From tracking real-time TNB costs to optimizing solar MPPT performance, this is what `owning your logic` looks like.
+{: .prompt-info }
