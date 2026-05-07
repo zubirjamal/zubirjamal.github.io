@@ -62,7 +62,7 @@ There is a massive amount of satisfaction in being your own "digital plumber." W
 
 **Start small, keep the WAF high, and own your logic.**
 
-<img width="1024" height="576" alt="ha-dashboard" src="https://github.com/user-attachments/assets/324bea9a-fcb7-4366-9cd9-00627a2a5f8d" />
+<img width="960" height="1050" alt="ha-dashboard-web" src="https://github.com/user-attachments/assets/9e7a9623-7991-4b43-a46d-26ee3b51ae20" />
 
 > This isn't just a dashboard; it's the nervous system of my home. From tracking real-time TNB costs to optimizing solar MPPT performance, this is what `owning your logic` looks like.
 {: .prompt-info }
