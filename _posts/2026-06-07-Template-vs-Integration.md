@@ -5,6 +5,7 @@ date: 2026-06-07 10:00:00 +0800
 categories: [HA Guide]
 tags: [homeassistant, smarthome, self-hosting, esolat, malaysia]
 author: zubirjamal
+layout: mypost
 image: "https://github.com/user-attachments/assets/0ba85fee-319b-45c2-8378-7f2b9170a933"
 mermaid: true
 ---
@@ -64,8 +65,7 @@ In the old template package, the automation logic was hardcoded alongside the se
 ```yaml
 trigger:
   - platform: template
-    value_template: >-
-      {{ state_attr('sensor.solat_maghrib', '24hours') == (now().strftime('%s') | int + 15*60) | timestamp_custom("%H:%M", false) }}
+    value_template: {{ state_attr('sensor.solat_maghrib', '24hours') == (now().strftime('%s') | int + 15*60) | timestamp_custom("%H:%M", false) }}
 ```
 {: .nolineno }
 
