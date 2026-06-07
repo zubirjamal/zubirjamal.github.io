@@ -24,9 +24,9 @@ Before you can automate anything, Home Assistant needs data. How that data gets 
 
 ```mermaid
 graph TD
-    A[JAKIM API / Web Source] -->|Raw Data| B(Data Processing Layer)
-    B -->|Option 1: \n YAML & Jinja2| C[Template Sensors]
-    B -->|Option 2: \n Native Python Code| D[Custom Integration]
+  A[JAKIM API / Web Source] -->|Raw Data| B(Data Processing Layer)
+  B -->|Option 1: \n YAML & Jinja2| C[Template Sensors]
+  B -->|Option 2: \n Native Python Code| D[Custom Integration]
 ```
 
 ### The Legacy Way: Template Entities (`HomeAssistantAdzan`)
