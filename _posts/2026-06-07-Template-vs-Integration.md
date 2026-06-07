@@ -10,6 +10,8 @@ image: "https://github.com/user-attachments/assets/0ba85fee-319b-45c2-8378-7f2b9
 mermaid: true
 ---
 
+Assalamualaikum
+
 Every Home Assistant user goes through a distinct evolution. You start by adding basic devices through the UI. Then, you want more control, so you dive into manual automations. Eventually, you realize you need custom data formats, leading you into the world of Jinja2 templating. Finally, as your smart home grows, you look for ways to scale your configurations without losing your sanity.
 
 ![yaml-me-jinja-me](https://github.com/user-attachments/assets/acb4be26-fc60-47ad-ab0d-9bf04690356c){: h="250" }
