@@ -1,9 +1,9 @@
 ---
 title: "Home Assistant Templates vs. Integrations"
-description: "The benefits and how it evolved."
+description: "Stop copying and pasting massive YAML blocks. Learn how migrating to native platforms simplifies your automation triggers."
 date: 2026-06-07 10:00:00 +0800
 categories: [HA Guide]
-tags: [homeassistant, smarthome, self-hosting, malaysia]
+tags: [homeassistant, smarthome, self-hosting, esolat, malaysia]
 layout: mypost
 author: zubirjamal
 image: "https://github.com/user-attachments/assets/0ba85fee-319b-45c2-8378-7f2b9170a933"
@@ -12,7 +12,7 @@ mermaid: true
 
 Every Home Assistant user goes through a distinct evolution. You start by adding basic devices through the UI. Then, you want more control, so you dive into manual automations. Eventually, you realize you need custom data formats, leading you into the world of Jinja2 templating. Finally, as your smart home grows, you look for ways to scale your configurations without losing your sanity.
 
-<img height="250" alt="image" src="https://github.com/user-attachments/assets/4a55e1c8-f7c9-48e0-9f8b-69a332e86e74" />
+<img height="250" alt="yaml-me-jinja-me" src="https://github.com/user-attachments/assets/acb4be26-fc60-47ad-ab0d-9bf04690356c" />
 
 To explain the difference between **Templates vs. Integrations** and **Manual Automations vs. Blueprints**, I want to share a real-world case study from my own projects: the evolution of tracking and automating Islamic prayer times (eSolat) in Home Assistant.
 
@@ -24,9 +24,9 @@ Before you can automate anything, Home Assistant needs data. How that data gets 
 
 ```mermaid
 graph TD
-  A[JAKIM API / Web Source] -->|Raw Data| B(Data Processing Layer)
-  B -->|Option 1: \n YAML & Jinja2| C[Template Sensors]
-  B -->|Option 2: \n Native Python Code| D[Custom Integration]
+A[JAKIM API / Web Source] -->|Raw Data| B(Data Processing Layer)
+B -->|Option 1: \n YAML & Jinja2| C[Template Sensors]
+B -->|Option 2: \n Native Python Code| D[Custom Integration]
 ```
 
 ### The Legacy Way: Template Entities (`HomeAssistantAdzan`)
@@ -35,9 +35,9 @@ Templates use the Jinja2 templating engine to manipulate, calculate, or reformat
 
 In my original project, fetching prayer times from JAKIM relied heavily on the template approach. It worked, but it carried a heavy configuration burden:
 
-* **The Setup:** Users had to deal with YAML packages, manual file placement inside `/config/HAMY`, and long chunks of complex Jinja2 code just to parse time strings.
-* **The Entity Clutter:** The template approach forced the creation of 6 or 7 individual raw sensors (`sensor.solat_subuh`, `sensor.solat_maghrib`, etc.) cluttering the States developer tool.
-* **Fragility:** If the underlying API structure changed, users had to dive into dense YAML file structures to update the parsing logic manually.
+- **The Setup:** Users had to deal with YAML packages, manual file placement inside `/config/HAMY`, and long chunks of complex Jinja2 code just to parse time strings.
+- **The Entity Clutter:** The template approach forced the creation of 6 or 7 individual raw sensors (`sensor.solat_subuh`, `sensor.solat_maghrib`, etc.) cluttering the States developer tool.
+- **Fragility:** If the underlying API structure changed, users had to dive into dense YAML file structures to update the parsing logic manually.
 
 ### The Modern Way: Native Integrations (`homeassistant-esolattakwim`)
 
@@ -45,9 +45,9 @@ Integrations are the foundational building blocks of Home Assistant. They are wr
 
 When I rewrote the project into a proper custom integration installed via HACS, everything changed:
 
-* **The Setup:** A clean user interface with a native options flow. Users just choose their state and zone code from a dropdown menu.
-* **The Integration Elegance:** Instead of scattering multiple independent text entities requiring manual string extraction, the integration handles raw data normalization cleanly via Python, delivering robust native time sensors and calendar tracking directly.
-* **The Maintenance:** The Python backend handles error catching, API retries, and data normalization entirely behind the scenes. 
+- **The Setup:** A clean user interface with a native options flow. Users just choose their state and zone code from a dropdown menu.
+- **The Integration Elegance:** Instead of scattering multiple independent text entities requiring manual string extraction, the integration handles raw data normalization cleanly via Python, delivering robust native time sensors and calendar tracking directly.
+- **The Maintenance:** The Python backend handles error catching, API retries, and data normalization entirely behind the scenes. 
 
 > **The Verdict:** Use **Templates** for quick patches, math calculations between two existing sensors, or simple text formatting. Build or use an **Integration** when you need a robust, plug-and-play UI experience that handles API connections and state data cleanly.
 {: .prompt-info }
@@ -69,8 +69,8 @@ trigger:
       {{ state_attr('sensor.solat_maghrib', '24hours') == (now().strftime('%s') | int + 15*60) | timestamp_custom("%H:%M", false) }}
 ```
 
-* **The Problem:** If a user wanted to switch their announcement speaker from a Google Nest to an Amazon Echo, they had to modify the core automation code.
-* **The Update Nightmare:** If I pushed a bug fix to the repository, updating meant the user risked overwriting their highly personalized media player or volume configurations.
+- **The Problem:** If a user wanted to switch their announcement speaker from a Google Nest to an Amazon Echo, they had to modify the core automation code.
+- **The Update Nightmare:** If I pushed a bug fix to the repository, updating meant the user risked overwriting their highly personalized media player or volume configurations.
 
 ### The Modern Way: Automation Blueprints
 
@@ -99,8 +99,8 @@ triggers:
         offset: "-00:15:00"
 ```
 
-* **The Benefit:** The user gets a beautiful UI form. They just select their target sensors, pick their smart speakers from a dropdown menu, toggle push notifications, or choose special audio files (like Eid Takbir).
-* **The Logic Stays Untouched:** The under-the-hood parsing logic remains intact. If a bug is fixed in the blueprint, every automation created from it receives the fix automatically without wiping out the user's specific speaker selections.
+- **The Benefit:** The user gets a beautiful UI form. They just select their target sensors, pick their smart speakers from a dropdown menu, toggle push notifications, or choose special audio files (like Eid Takbir).
+- **The Logic Stays Untouched:** The under-the-hood parsing logic remains intact. If a bug is fixed in the blueprint, every automation created from it receives the fix automatically without wiping out the user's specific speaker selections.
 
 > **The Verdict:** Use **Manual Automations** for highly unique, one-off logic that only applies to a single room or situation in your home. Use **Blueprints** when you want to share an automation framework with others, or when you need to replicate the exact same logic across multiple devices without duplicating code.
 {: .prompt-tip }
