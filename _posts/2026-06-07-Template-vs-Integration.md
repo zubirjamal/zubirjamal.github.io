@@ -13,7 +13,7 @@ Assalamualaikum
 
 Every Home Assistant user goes through a distinct evolution. You start by adding basic devices through the UI. Then, you want more control, so you dive into manual automations. Eventually, you realize you need custom data formats, leading you into the world of Jinja2 templating. Finally, as your smart home grows, you look for ways to scale your configurations without losing your sanity.
 
-![yaml-me-jinja-me](https://github.com/user-attachments/assets/acb4be26-fc60-47ad-ab0d-9bf04690356c){: h="250" }
+![yaml-me-jinja-me](https://github.com/user-attachments/assets/acb4be26-fc60-47ad-ab0d-9bf04690356c){: h="200" }
 
 To explain the difference between **Templates vs. Integrations** and **Manual Automations vs. Blueprints**, I want to share a real-world case study from my own projects: the evolution of tracking and automating Islamic prayer times (eSolat) in Home Assistant.
 
