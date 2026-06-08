@@ -83,7 +83,8 @@ The setup that powers everything written here:
 > Semoga perkongsian ini memberi manfaat kepada anda semua. InshaAllah.
 
 - 🐦 Twitter / X: [@zubirjamal](https://twitter.com/zubirjamal)
+- @ Threads: [@zubir2k](https://threads.com/@zubir2k)
 - 💼 LinkedIn: [zubirjamal](https://www.linkedin.com/in/zubirjamal/)
 - 💻 GitHub: [zubir2k](https://github.com/zubir2k)
-
+- 🎬 YouTube: [@ZubirJamal](https://youtube.com/@zubirjamal)
 
