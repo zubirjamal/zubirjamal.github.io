@@ -41,12 +41,9 @@ Think of the Model Context Protocol (originally open-sourced by Anthropic) as th
 
 MCP standardizes this completely by splitting the architecture into a clean, two-sided protocol where the client and the server communicate over standard transport protocols:
 
-```
-┌────────────────────────┐         ┌────────────────────────┐
-│       AI Client        │ ◄─────► │       MCP Server       │
-│  (M365 Copilot, etc.)  │  JSON   │  (Sits in front of your│
-│                        │  RPC    │   internal systems)    │
-└────────────────────────┘         └────────────────────────┘
+```mermaid
+graph LR
+    A["AI Client<br>(M365 Copilot, etc.)"] <--> |-- JSON-RPC --| B["MCP Server<br>(Sits in front of your internal systems)"]
 ```
 
 The AI client doesn't need to know the inner workings of your complex legacy systems; it just needs to know how to speak MCP. Your internal infrastructure exposes a clean JSON schema of what actions are available, and the model requests execution when triggered by user intent.
