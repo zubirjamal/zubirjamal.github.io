@@ -44,7 +44,7 @@ This brings me to my current configuration: hosting a comprehensive [HA-MCP (Hom
 
 By hosting a comprehensive MCP server on my local network, I can now hook my entire smart home ecosystem into *any* cutting-edge agentic platform or development tool—whether that’s Claude Desktop, Claude Code, or Cursor. 
 
-<img src="https://raw.githubusercontent.com/homeassistant-ai/ha-mcp/master/docs/img/demo.webp" />
+<img src="https://raw.githubusercontent.com/homeassistant-ai/ha-mcp/master/docs/img/demo.webp" alt="Demo" />
 
 ---
 
