@@ -1,7 +1,7 @@
 ---
 title: "My AI Journey into Smart Home"
 date: 2026-07-07 00:00:00 +0800
-categories: [Blog, Smart Home, Artificial Intelligence]
+categories: [AI & Automations]
 tags: [home-assistant, mcp, n8n, xiaozhi, automation, homelab]
 image: "https://github.com/user-attachments/assets/1abf3522-2770-486f-809b-e034495215a7"
 description: From Raw Webhooks to Structured Control with MCP eliminating (or at least reduce) AI hallucinations.
