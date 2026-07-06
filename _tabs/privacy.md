@@ -1,6 +1,6 @@
 ---
 # the default layout is 'page'
-# icon: fas fa-info-circle
+icon: fas fa-user-lock
 order: 5
 title: Privacy Policy
 permalink: /privacy/
