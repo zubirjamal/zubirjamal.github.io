@@ -1,6 +1,6 @@
 ---
 title: "My AI Journey into Smart Home"
-date: 2026-07-07 00:00:00 +0800
+date: 2026-07-07 00:15:00 +0800
 categories: [AI & Automations]
 tags: [home-assistant, mcp, n8n, xiaozhi, automation, homelab]
 image: "https://github.com/user-attachments/assets/b24dfcab-41fd-4140-962b-c9a89696d1e2"
