@@ -2,7 +2,7 @@
 title: "Home Assistant Templates vs. Integrations 🎨"
 description: "Stop copying and pasting massive YAML blocks. Learn how migrating to native platforms simplifies your automation triggers."
 date: 2026-06-07 10:00:00 +0800
-categories: [HA Guide]
+categories: [Home Assistant]
 tags: [homeassistant, smarthome, self-hosting, esolat, malaysia]
 author: zubirjamal
 image: "https://github.com/user-attachments/assets/0ba85fee-319b-45c2-8378-7f2b9170a933"
