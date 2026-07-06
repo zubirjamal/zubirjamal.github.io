@@ -3,7 +3,7 @@ title: "My AI Journey into Smart Home"
 date: 2026-07-07 00:00:00 +0800
 categories: [AI & Automations]
 tags: [home-assistant, mcp, n8n, xiaozhi, automation, homelab]
-image: "https://github.com/user-attachments/assets/1abf3522-2770-486f-809b-e034495215a7"
+image: "https://github.com/user-attachments/assets/b24dfcab-41fd-4140-962b-c9a89696d1e2"
 description: From Raw Webhooks to Structured Control with MCP eliminating (or at least reduce) AI hallucinations.
 ---
 
@@ -43,6 +43,8 @@ Instead of writing massive text prompts trying to explain my home setup to a dis
 This brings me to my current configuration: hosting a comprehensive [HA-MCP (Home Assistant Model Context Protocol)](https://homeassistant-ai.github.io/ha-mcp/) server locally.
 
 By hosting a comprehensive MCP server on my local network, I can now hook my entire smart home ecosystem into *any* cutting-edge agentic platform or development tool—whether that’s Claude Desktop, Claude Code, or Cursor. 
+
+<img src="https://raw.githubusercontent.com/homeassistant-ai/ha-mcp/master/docs/img/demo.webp" />
 
 ---
 
