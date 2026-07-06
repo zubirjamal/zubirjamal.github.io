@@ -63,11 +63,13 @@ Manual automations are built for a specific, tailored purpose in your home. You 
 
 In the old template package, the automation logic was hardcoded alongside the sensors. If a user wanted to change their notification settings or target media players, they had to deal with expressions like this:
 
+{% raw %}
 ```yaml
 trigger:
   - platform: template
     value_template: {{ state_attr('sensor.solat_maghrib', '24hours') == (now().strftime('%s') | int + 15*60) | timestamp_custom("%H:%M", false) }}
 ```
+{% endraw %}
 {: .nolineno }
 
 - **The Problem:** If a user wanted to switch their announcement speaker from a Google Nest to an Amazon Echo, they had to modify the core automation code.
