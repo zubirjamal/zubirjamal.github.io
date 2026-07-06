@@ -1,7 +1,7 @@
 ---
 title: "Beyond the RAG Illusion 🤖"
 description: "Why the Enterprise Needs Model Context Protocol (MCP)"
-category: [Blog]
+category: [AI & Automations]
 date: 2026-07-05 21:00:00 +0800
 tags: [rag, mcp-server, mcp, ai, copilot, enterprise, esolat, malaysia]
 author: zubirjamal
