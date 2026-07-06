@@ -2,7 +2,7 @@
 title: Install Home Assistant 💾
 description: Macamana nak mula
 date: 2025-01-26 12:00:00 +0800
-categories: [HA Guide]
+categories: [Home Assistant]
 tags: [homeassistant, smarthome, installation]
 layout: mypost
 author: zubirjamal
