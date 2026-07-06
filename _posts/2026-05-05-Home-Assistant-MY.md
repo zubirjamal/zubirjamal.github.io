@@ -2,7 +2,7 @@
 title: "Home Assistant: The Lokal Integrations 🤝"
 description: "Integrations built by Malaysians for Malaysians"
 date: 2026-05-05 12:00:00 +0800
-categories: [HA Guide]
+categories: [Home Assistant]
 tags: [homeassistant, smarthome, self-hosting, malaysia, integrations, lokal]
 layout: mypost
 author: zubirjamal
