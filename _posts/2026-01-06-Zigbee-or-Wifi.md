@@ -4,6 +4,7 @@ description: "My Philosophy on Choosing Smart Sensors That Last."
 date: 2026-01-06 21:00:00 +0800
 categories: [Blog]
 tags: [homeassistant, smarthome, malaysia, self-hosting, zigbee, wifi]
+mermaid: true
 image: "https://github.com/user-attachments/assets/9b1ad190-7840-42e3-a128-cda1d0f6a9bd"
 ---
 
