@@ -2,7 +2,7 @@
 title: "Home Assistant Setup: Hire or DIY? 🚧"
 description: "Why Home Assistant in Malaysia is a necessity for DIYers -- own your smart home logic."
 date: 2026-05-02 12:00:00 +0800
-categories: [HA Guide]
+categories: [Home Assistant]
 tags: [homeassistant, smarthome, self-hosting, malaysia]
 layout: mypost
 author: zubirjamal
