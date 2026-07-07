@@ -25,6 +25,8 @@ It worked—until it didn't. This architecture was highly prone to cognitive fai
 *   **The Problem:** The LLM had no rigid structure. It was constantly guessing my entity names. It would try to turn on `light.livingroom` when the actual entity was `light.living_room_main`. 
 *   **The Hallucination:** If it got confused by a prompt, it would fabricate nonexistent JSON keys or parameter values, completely shattering the n8n parsing logic or triggering error loops on the Home Assistant API.
 
+![Alexa](https://github.com/user-attachments/assets/d871aaa5-9573-4b6d-9ae0-8696b8860dc8)
+
 ---
 
 ## Generation 2: The Xiaozhi MCP Bridge (Hardware Grounding)
