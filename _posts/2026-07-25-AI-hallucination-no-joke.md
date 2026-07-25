@@ -3,8 +3,9 @@ title: "AI Hallucination Is No Joke 🤖"
 description: "Navigating Enterprise Risk"
 category: [AI & Automations]
 date: 2026-07-25 21:00:00 +0800
-tags: [rag, mcp-server, mcp, ai, copilot, enterprise, malaysia]
+tags: [rag, mcp-server, hallucinate, mcp, ai, copilot, enterprise, malaysia]
 author: zubirjamal
+image: "https://github.com/user-attachments/assets/79adc0ea-da20-425e-91a0-fb88c29bac11"
 mermaid: true
 ---
 
