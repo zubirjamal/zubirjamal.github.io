@@ -96,10 +96,11 @@ If your previous smart switch setup relied on a capacitor, access your light fix
 
 ### Step 3: Wire the ZBMini-L2 at Point B
 
-1. Connect **Traveler Wire 1** (Live feed from Point A) directly into the **`L IN`** terminal on the ZBMini-L2 module.
+1. Connect **Traveler Wire 1** (Live feed bridged from Point A) directly into the **`L IN`** terminal on the ZBMini-L2 module.
 2. Bridge a short jumper wire from **`L IN`** on the ZBMini-L2 into the **`L`** terminal of Switch B.
-3. Connect the **Load Wire** (leading to the light bulb) into the **`L OUT`** terminal on the ZBMini-L2.
-4. Connect **Traveler Wire 2** (from Switch A) into the output terminal of Switch B, and run a wire from that junction into the **`S2`** terminal on the ZBMini-L2.
+3. Connect **Traveler Wire 2** (the trigger line from Switch A) into the terminal of Switch B.
+4. Run a wire from that combined junction on Switch B straight into the **`S2`** terminal on the ZBMini-L2. *(Leave **`S1`** completely disconnected).*
+5. Connect the **Load Wire** (leading to the light bulb) into the **`L OUT`** terminal on the ZBMini-L2.
 
 ---
 
