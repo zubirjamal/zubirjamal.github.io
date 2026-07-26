@@ -43,33 +43,37 @@ When converting to the ZBMini-L2 setup:
 
 ```mermaid
 flowchart TD
-    subgraph Point_A [Point A - Main Live Input]
-        L_IN[Main Live Wire]
-        SW_A[Switch A]
+    subgraph Point_A ["Point A (Main Live Switch Point)"]
+        Live_In["Incoming Live Wire"]
+        SW_A["Switch A"]
     end
 
-    subgraph Point_B [Point B - Module Location]
-        L_OUT[Load Wire to Lamp]
-        SW_B[Switch B]
-        ZBMini[Sonoff ZBMini-L2 Module]
+    subgraph Point_B ["Point B (Module Location)"]
+        SW_B["Switch B"]
+        
+        subgraph ZBMini ["Sonoff ZBMini-L2 Module"]
+            L_IN["L in"]
+            S2["S2"]
+            L_OUT["L Out"]
+        end
     end
 
-    LAMP[Light Fixture]
+    Lamp["Light Fixture (Load)"]
 
-    %% Live Connection
-    L_IN -->|Traveler 1 / Live Bridge| ZBMini
-    L_IN --> SW_A
+    %% Live Feed Connections (Red Line / Live Bridge)
+    Live_In --> SW_A
+    SW_A -->|Traveler 1 / Live Bridge| L_IN
+    SW_A -->|Traveler 1 / Live Bridge| SW_B
 
-    %% Switch Trigger Connection
+    %% Switch Trigger Loop (Black Line to S2)
     SW_A -->|Traveler 2 / Trigger Line| SW_B
-    SW_B --> ZBMini
+    SW_B -->|Parallel Trigger Output| S2
 
-    %% Output to Lamp
-    ZBMini -->|L OUT| L_OUT
-    L_OUT --> LAMP
+    %% Load Output
+    L_OUT -->|Load Wire| Lamp
 
-    %% Styling
-    classDef module fill:#00a8e8,stroke:#003459,color:#fff,font-weight:bold;
+    %% Styling (Sonoff Orange)
+    classDef module fill:#F36C21,stroke:#D1520D,color:#fff,font-weight:bold;
     class ZBMini module;
 ```
 
