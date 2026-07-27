@@ -34,7 +34,7 @@ I will also be releasing companion video walkthroughs for these new integrations
 Since this is just the beginning, here are a few places you might want to check out next:
 * 📖 **[About This Blog](/about/)**: Learn more about my background and why I focus on the Malaysian tech scene.
 * 📬 **[Contact Me](https://zubir.is-a.dev/#contact)**: Have a question about a specific HA setup? Drop me a message.
-* 🛠️ **[Latest Guides](/posts/)**: Check out my recent posts on Home Assistant MCP and avoiding RAG hallucinations.
+* 🛠️ **[Latest Guides](/archives/)**: Check out my recent posts on Home Assistant and AI hallucinations.
 
 Terima kasih kerana sudi singgah. 
 > Let’s build some amazing, reliable automations together. 
