@@ -35,6 +35,12 @@ Local environmental data is often more accurate than generic global weather prov
 - [Malaysia Weather](https://github.com/zubir2k/homeassistant-malaysiaweather) (by Dr Yusri Salleh): This pulls live data directly from MET Malaysia. It provides localized rain warnings and weather alerts specific to your district.
 - [Frigem](https://github.com/kucau0901/frigem) (by Dr Yusri Salleh): This is a powerful local contribution that leverages Google Gemini AI to analyze Frigate NVR footage. Instead of a generic "Motion detected," it can describe the scene—like "A delivery rider is at the gate"—giving you actual context.
 
+### 4. Smart Mobility & EV (Automotive)
+
+With the rise of EVs on Malaysian roads, bridging our vehicles with home energy setups has become the next logical frontier.
+
+* **[Proton e.MAS](https://github.com/KaiHongTan/proton-emas-home-assistant) (by Kai Hong Tan):** Seamlessly bridges the official Proton e.MAS telematics/API into Home Assistant. Perfect for monitoring battery SoC, remaining range, charging status, and climate control directly from your dashboard. Especially handy for timing home charging around solar surplus or off-peak utility tariffs.
+
 ## How to Install These
 
 Most of these are available as Custom Components via the Home Assistant Community Store (HACS). You don't need to be a developer to use them; you just need to be a DIYer who knows how to add a GitHub repository to your setup.
