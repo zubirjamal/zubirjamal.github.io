@@ -19,21 +19,21 @@ Here are some of the most impactful local integrations that turn a "smart house"
 ### 1. Mastering the "Kita Beli Beras" (Utility & Energy)
 
 Energy monitoring is a hobby for some, but in Malaysia, it's about managing the monthly bill.
-- [TNB Calculator](https://github.com/salihinsaealal/home-assistant-tnb-calculator) (by Cikgu Salihin): This is a must-have. It tracks your consumption and applies the exact TNB tariff brackets—including NEM Rakyat credits—in real-time.
-- [SAJ Monitor](https://github.com/LowKey88/SAJMonitor) (by Hisyam Nasir): For those running SAJ Solar Inverters, this integration pulls your PV generation and battery levels directly into your HA dashboard.
+* **[TNB Calculator](https://github.com/salihinsaealal/home-assistant-tnb-calculator) (by Cikgu Salihin):** This is a must-have. It tracks your consumption and applies the exact TNB tariff brackets—including NEM Rakyat credits—in real-time.
+* **[SAJ Monitor](https://github.com/LowKey88/SAJMonitor) (by Hisyam Nasir):** For those running SAJ Solar Inverters, this integration pulls your PV generation and battery levels directly into your HA dashboard.
 
 ### 2. Spiritual & Lifestyle Integration
 
 A home should reflect the routines of the people living in it.
-- [eSolat Takwim](https://github.com/zubir2k/homeassistant-esolattakwim) (by Zubir Jamal): These integrations pull precise prayer times based on JAKIM data. You can use these to automate "Silent Mode" on your smart speakers or adjust lighting for prayer times.
-- [MySolat](https://github.com/mysolat/homeassistant) (by Khairi Adnan): Another prayer time integration based on JAKIM with build in controls like audio selection and volume.
-- [Daily Hadith](https://github.com/zubir2k/homeassistant-dailyhadith) (by Zubir Jamal): A simple way to bring a touch of mindfulness to your morning by displaying a daily Hadith on your smart screens or dashboards.
+* **[eSolat Takwim](https://github.com/zubir2k/homeassistant-esolattakwim) (by Zubir Jamal):** These integrations pull precise prayer times based on JAKIM data. You can use these to automate "Silent Mode" on your smart speakers or adjust lighting for prayer times.
+* **[MySolat](https://github.com/mysolat/homeassistant) (by Khairi Adnan):** Another prayer time integration based on JAKIM with build in controls like audio selection and volume.
+* **[Daily Hadith](https://github.com/zubir2k/homeassistant-dailyhadith) (by Zubir Jamal):** A simple way to bring a touch of mindfulness to your morning by displaying a daily Hadith on your smart screens or dashboards.
 
 ### 3. Safety, Weather, and AI
 
 Local environmental data is often more accurate than generic global weather providers.
-- [Malaysia Weather](https://github.com/zubir2k/homeassistant-malaysiaweather) (by Dr Yusri Salleh): This pulls live data directly from MET Malaysia. It provides localized rain warnings and weather alerts specific to your district.
-- [Frigem](https://github.com/kucau0901/frigem) (by Dr Yusri Salleh): This is a powerful local contribution that leverages Google Gemini AI to analyze Frigate NVR footage. Instead of a generic "Motion detected," it can describe the scene—like "A delivery rider is at the gate"—giving you actual context.
+* **[Malaysia Weather](https://github.com/zubir2k/homeassistant-malaysiaweather) (by Dr Yusri Salleh):** This pulls live data directly from MET Malaysia. It provides localized rain warnings and weather alerts specific to your district.
+* **[Frigem](https://github.com/kucau0901/frigem) (by Dr Yusri Salleh):** This is a powerful local contribution that leverages Google Gemini AI to analyze Frigate NVR footage. Instead of a generic "Motion detected," it can describe the scene—like "A delivery rider is at the gate"—giving you actual context.
 
 ### 4. Smart Mobility & EV (Automotive)
 
