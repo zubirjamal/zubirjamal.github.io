@@ -19,6 +19,7 @@ Here are some of the most impactful local integrations that turn a "smart house"
 ### 1. Mastering the "Kita Beli Beras" (Utility & Energy)
 
 Energy monitoring is a hobby for some, but in Malaysia, it's about managing the monthly bill.
+* **[myTNB](https://github.com/danieyal/ha-mytnb) (by Latiff Danieyal):** This integrates with your myTNB accounts. Allowing users to automatically discover and monitor Tenaga Nasional Berhad electricity accounts, tracking kWh consumption, billing costs, bill history, smart meter status, and daily breakdowns.
 * **[TNB Calculator](https://github.com/salihinsaealal/home-assistant-tnb-calculator) (by Cikgu Salihin):** This is a must-have. It tracks your consumption and applies the exact TNB tariff brackets—including NEM Rakyat credits—in real-time.
 * **[SAJ Monitor](https://github.com/LowKey88/SAJMonitor) (by Hisyam Nasir):** For those running SAJ Solar Inverters, this integration pulls your PV generation and battery levels directly into your HA dashboard.
 
