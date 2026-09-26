@@ -4,9 +4,11 @@ description: What I Learned Building an OIDC Broker on Cloudflare Workers
 date: 2026-09-26 17:00:00 +0800
 categories: [Blog]
 tags: [blog, Security, OIDC, OAuth2, Cloudflare Workers, Self-Hosted, Home Assistant, TypeScript]
+mermaid: true
 author: zubirjamal
 image: "https://github.com/user-attachments/assets/b57e83e6-b06a-4f37-a469-ce1fbef418de"
 ---
+Assalamualaikum
 
 Managing passwords across a homelab gets exhausting. If you run Home Assistant, Proxmox, and a NAS, every service wants its own credential store. Traditional Single Sign-On (SSO) tools like Keycloak demand dedicated VMs and JVM tuning, while commercial proxies charge per-seat fees that make no sense for a family setup.
 
