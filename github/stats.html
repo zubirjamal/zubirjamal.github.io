@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GitHub Traffic</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2330;--muted:#6b7385;--border:#e2e5ea;--accent:#2f6fde;--accent-soft:#e7effd;--up:#1a8a4a;--down:#c93a3a;--row-hover:#f2f5fa}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1218;--panel:#171b23;--text:#e3e6ec;--muted:#8c93a3;--border:#2a303c;--accent:#5b8ff0;--accent-soft:#1d2840;--up:#3ec27a;--down:#ef6a6a;--row-hover:#1e2330}}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5}
+header h1{font-size:16px;margin:0 10px 0 0}
+input[type=password],input[type=search]{padding:7px 9px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font:inherit}
+button{padding:7px 12px;border:1px solid var(--border);border-radius:6px;background:var(--panel);color:var(--text);font:inherit;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button:disabled{opacity:.5;cursor:default}
+#status{color:var(--muted);font-size:13px;margin-left:auto}
+.layout{display:grid;grid-template-columns:280px 1fr}
+aside{border-right:1px solid var(--border);background:var(--panel);padding:10px;overflow:auto;height:calc(100vh - 56px);position:sticky;top:56px}
+aside input{width:100%;margin-bottom:8px}
+.repo-item{display:flex;justify-content:space-between;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.repo-item span:first-child{overflow:hidden;text-overflow:ellipsis}
+.repo-item:hover{background:var(--row-hover)}
+.repo-item.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.repo-item .n{color:var(--muted);font-variant-numeric:tabular-nums}
+main{padding:16px;min-width:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.card .label{color:var(--muted);font-size:12px}
+.card .value{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:16px;min-width:0}
+.panel h2{font-size:14px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart-wrap{position:relative;height:260px}
+.tscroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:600;font-size:12px;cursor:pointer;user-select:none;white-space:nowrap}
+th.num,td.num{text-align:right;white-space:nowrap}
+tbody tr:hover{background:var(--row-hover)}
+td.clip{max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.diff{font-size:11px;margin-left:4px}
+.diff.up{color:var(--up)}.diff.down{color:var(--down)}
+.muted{color:var(--muted)}
+.seg button{padding:4px 9px;font-size:12px}
+.seg button.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.controls{display:flex;gap:12px;flex-wrap:wrap;font-weight:400}
+.period-note{margin:8px 0 0;font-size:12px}
+a{color:var(--accent);text-decoration:none}
+.link{cursor:pointer;color:var(--accent)}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+@media (max-width:900px){.layout{grid-template-columns:1fr}aside{position:static;height:auto;max-height:260px;border-right:0;border-bottom:1px solid var(--border)}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>GitHub Traffic</h1>
+  <input type="password" id="token" placeholder="GitHub token" size="26" autocomplete="off">
+  <button id="saveToken">Save token</button>
+  <label class="muted"><input type="checkbox" id="incForks"> include forks</label>
+  <button class="primary" id="refresh">Refresh</button>
+  <button id="exportBtn" title="Download stored history as JSON">Export history</button>
+  <button id="importBtn" title="Merge a previously exported history file">Import</button>
+  <input type="file" id="importFile" accept=".json,application/json" hidden>
+  <span id="status"></span>
+</header>
+<div class="layout">
+  <aside>
+    <input type="search" id="filter" placeholder="Filter repos">
+    <div id="repoList"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<script>
+const LS = {token:'ghTraffic.token', data:'ghTraffic.data', prev:'ghTraffic.prev', hist:'ghTraffic.history', forks:'ghTraffic.forks', period:'ghTraffic.period', group:'ghTraffic.group'};
+const PERIODS = {'7':'7 days', '14':'14 days', '30':'30 days', '90':'90 days', '365':'12 months', 'all':'All history'};
+const GROUPS = {day:'Day', week:'Week', month:'Month'};
+const ls = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch(e){ console.warn(e); return false; } }
+};
+
+// data: latest full fetch; prev: summary of the fetch before it (for change indicators);
+// hist: daily views/clones per repo, accumulated across refreshes {full:{v:{date:[count,uniques]}, c:{...}}}
+let data = ls.get(LS.data, null);
+let prev = ls.get(LS.prev, null);
+let hist = ls.get(LS.hist, {});
+let selected = null;   // null = overview
+let period = ls.get(LS.period, '14');   // key of PERIODS
+let group = ls.get(LS.group, 'day');     // key of GROUPS
+if (!PERIODS[period]) period = '14';
+if (!GROUPS[group]) group = 'day';
+let charts = [], pending = [];
+const sortState = {};
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => (n ?? 0).toLocaleString();
+const setStatus = t => { $('status').textContent = t; };
+
+/* ---------- GitHub API ---------- */
+async function gh(path, token){
+  const url = path.startsWith('http') ? path : 'https://api.github.com' + path;
+  const r = await fetch(url, {headers:{
+    Authorization: 'Bearer ' + token,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  }});
+  if (!r.ok){
+    const body = await r.text().catch(() => '');
+    const e = new Error(r.status + ' ' + body.slice(0, 160));
+    e.status = r.status;
+    e.remaining = r.headers.get('x-ratelimit-remaining');
+    throw e;
+  }
+  return {json: await r.json(), link: r.headers.get('link')};
+}
+function nextLink(link){
+  if (!link) return null;
+  for (const part of link.split(',')){
+    const m = part.match(/<([^>]+)>;\s*rel="next"/);
+    if (m) return m[1];
+  }
+  return null;
+}
+async function listRepos(token){
+  let url = '/user/repos?affiliation=owner&per_page=100&sort=full_name', out = [];
+  while (url){ const {json, link} = await gh(url, token); out.push(...json); url = nextLink(link); }
+  return out;
+}
+async function pool(items, n, fn){
+  let i = 0;
+  const workers = Array.from({length: Math.min(n, items.length)}, async () => {
+    while (i < items.length){ const idx = i++; await fn(items[idx], idx); }
+  });
+  await Promise.all(workers);
+}
+
+async function refresh(){
+  const token = $('token').value.trim() || ls.get(LS.token, '');
+  if (!token){ setStatus('Enter a token first'); return; }
+  ls.set(LS.token, token);
+  $('refresh').disabled = true;
+  try {
+    setStatus('Listing repositories…');
+    let repos = await listRepos(token);
+    if (!$('incForks').checked) repos = repos.filter(r => !r.fork);
+    repos = repos.filter(r => r.permissions?.push !== false);
+    let done = 0;
+    const out = [];
+    await pool(repos, 6, async r => {
+      const base = '/repos/' + r.full_name + '/traffic';
+      const rec = {name:r.name, full:r.full_name, url:r.html_url, stars:r.stargazers_count, forks:r.forks_count,
+        fork:r.fork, private:r.private, archived:r.archived,
+        views:0, uniques:0, clones:0, cloneUniques:0, viewsDaily:[], clonesDaily:[], referrers:[], paths:[]};
+      try {
+        const [v, c, ref, p] = await Promise.all([
+          gh(base + '/views?per=day', token), gh(base + '/clones?per=day', token),
+          gh(base + '/popular/referrers', token), gh(base + '/popular/paths', token)]);
+        rec.views = v.json.count; rec.uniques = v.json.uniques;
+        rec.viewsDaily = (v.json.views || []).map(d => ({date:d.timestamp.slice(0,10), count:d.count, uniques:d.uniques}));
+        rec.clones = c.json.count; rec.cloneUniques = c.json.uniques;
+        rec.clonesDaily = (c.json.clones || []).map(d => ({date:d.timestamp.slice(0,10), count:d.count, uniques:d.uniques}));
+        rec.referrers = ref.json.map(x => ({referrer:x.referrer, count:x.count, uniques:x.uniques}));
+        rec.paths = p.json.map(x => ({path:x.path, title:x.title, count:x.count, uniques:x.uniques}));
+      } catch(e){
+        if (e.status === 403 && e.remaining === '0') throw e;   // rate limited: abort the whole refresh
+        rec.error = e.status === 403 ? 'no traffic access' : String(e.message).slice(0, 80);
+      }
+      out.push(rec);
+      setStatus(`Fetching traffic ${++done}/${repos.length}…`);
+    });
+    out.sort((a, b) => a.full.localeCompare(b.full));
+    if (data) prev = summarize(data);
+    data = {fetchedAt: new Date().toISOString(), repos: out};
+    mergeHistory(data);
+    ls.set(LS.data, data); ls.set(LS.prev, prev);
+    const histOk = ls.set(LS.hist, hist);
+    render();
+    setStatus(histOk ? 'Updated ' + new Date().toLocaleString() : 'Updated, but history storage is full: export it');
+  } catch(e){
+    setStatus(e.status === 401 ? 'Token rejected (401)' : e.status === 403 ? 'Rate limited or forbidden (403)' : 'Error: ' + e.message);
+  } finally {
+    $('refresh').disabled = false;
+  }
+}
+
+/* ---------- aggregation ---------- */
+function mergeHistory(d){
+  for (const r of d.repos){
+    if (r.error) continue;
+    const h = hist[r.full] || (hist[r.full] = {v:{}, c:{}});
+    r.viewsDaily.forEach(x => h.v[x.date] = [x.count, x.uniques]);
+    r.clonesDaily.forEach(x => h.c[x.date] = [x.count, x.uniques]);
+  }
+}
+function totals(repos){
+  const t = {repos:repos.length, views:0, uniques:0, clones:0, cloneUniques:0, active:0, stars:0};
+  for (const r of repos){
+    t.views += r.views; t.uniques += r.uniques; t.clones += r.clones; t.cloneUniques += r.cloneUniques;
+    t.stars += r.stars || 0; if (r.views > 0) t.active++;
+  }
+  return t;
+}
+function aggRefs(repos){
+  const m = {};
+  for (const r of repos) for (const x of r.referrers){
+    const a = m[x.referrer] || (m[x.referrer] = {referrer:x.referrer, count:0, uniques:0, repos:0, top:'', topFull:'', topCount:-1});
+    a.count += x.count; a.uniques += x.uniques; a.repos++;
+    if (x.count > a.topCount){ a.topCount = x.count; a.top = r.name; a.topFull = r.full; }
+  }
+  return Object.values(m);
+}
+function summarize(d){
+  const s = {totals: totals(d.repos), repos:{}, refs:{}};
+  for (const r of d.repos){
+    s.repos[r.full] = {views:r.views, uniques:r.uniques, clones:r.clones, cloneUniques:r.cloneUniques, stars:r.stars,
+      refs: Object.fromEntries(r.referrers.map(x => [x.referrer, x.count]))};
+  }
+  for (const x of aggRefs(d.repos)) s.refs[x.referrer] = x.count;
+  return s;
+}
+function dateRange(a, b){
+  const out = []; const d = new Date(a + 'T00:00:00Z'), e = new Date(b + 'T00:00:00Z');
+  while (d <= e){ out.push(d.toISOString().slice(0,10)); d.setUTCDate(d.getUTCDate() + 1); }
+  return out;
+}
+// daily data for one repo: stored history plus the latest fetch
+function dailyMaps(full){
+  const h = hist[full] || {v:{}, c:{}};
+  const v = {...h.v}, c = {...h.c};
+  const r = data.repos.find(x => x.full === full);
+  if (r){
+    r.viewsDaily.forEach(x => v[x.date] = [x.count, x.uniques]);
+    r.clonesDaily.forEach(x => c[x.date] = [x.count, x.uniques]);
+  }
+  return {v, c};
+}
+function periodBounds(){
+  const end = data.fetchedAt.slice(0,10);
+  if (period === 'all'){
+    let min = end;
+    for (const h of Object.values(hist)) for (const k of ['v', 'c']) for (const d in h[k]) if (d < min) min = d;
+    for (const r of data.repos) for (const x of [...r.viewsDaily, ...r.clonesDaily]) if (x.date < min) min = x.date;
+    return [min, end];
+  }
+  const s = new Date(end + 'T00:00:00Z');
+  s.setUTCDate(s.getUTCDate() - (+period - 1));
+  return [s.toISOString().slice(0,10), end];
+}
+function bucket(d){
+  if (group === 'month') return d.slice(0,7);
+  if (group === 'week'){   // weeks start on Monday
+    const x = new Date(d + 'T00:00:00Z');
+    x.setUTCDate(x.getUTCDate() - (x.getUTCDay() + 6) % 7);
+    return x.toISOString().slice(0,10);
+  }
+  return d;
+}
+function series(fulls){
+  const [start, end] = periodBounds();
+  const keys = [...new Set(dateRange(start, end).map(bucket))];
+  const idx = Object.fromEntries(keys.map((k, i) => [k, i]));
+  const V = keys.map(() => 0), U = keys.map(() => 0), C = keys.map(() => 0);
+  let first = null;
+  for (const f of fulls){
+    const {v, c} = dailyMaps(f);
+    for (const [d, [n, u]] of Object.entries(v)) if (d >= start && d <= end){
+      const i = idx[bucket(d)]; V[i] += n; U[i] += u; if (!first || d < first) first = d;
+    }
+    for (const [d, [n]] of Object.entries(c)) if (d >= start && d <= end){
+      C[idx[bucket(d)]] += n; if (!first || d < first) first = d;
+    }
+  }
+  const short = period !== 'all' && period !== '365';
+  const label = k => group === 'month' ? k : (group === 'week' ? 'wk ' : '') + (short ? k.slice(5) : k);
+  return {labels: keys.map(label), views:V, uniques:U, clones:C, start, end, first,
+    total: {views: V.reduce((a, b) => a + b, 0), clones: C.reduce((a, b) => a + b, 0)}};
+}
+
+/* ---------- rendering helpers ---------- */
+function diff(cur, old, hasPrev){
+  if (!hasPrev) return '';
+  if (old == null) return cur > 0 ? '<span class="diff up">new</span>' : '';
+  if (cur === old) return '';
+  const d = cur - old;
+  return `<span class="diff ${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${fmt(d)}</span>`;
+}
+const card = (label, val, old, hp) =>
+  `<div class="card"><div class="label">${label}</div><div class="value">${fmt(val)}${diff(val, old, hp)}</div></div>`;
+const repoLink = (full, name) => `<span class="link" data-repo="${esc(full)}">${esc(name)}</span>`;
+const pathLink = p => `<a href="https://github.com${esc(p)}" target="_blank" rel="noopener">${esc(p)}</a>`;
+const chartControls = () => `<span class="controls">
+  <span class="seg">${Object.entries(PERIODS).map(([k, l]) => `<button data-period="${k}" class="${period === k ? 'on' : ''}">${l}</button>`).join(' ')}</span>
+  <span class="seg">${Object.entries(GROUPS).map(([k, l]) => `<button data-group="${k}" class="${group === k ? 'on' : ''}">${l}</button>`).join(' ')}</span>
+</span>`;
+function periodNote(s){
+  let t = `${s.start} to ${s.end}: ${fmt(s.total.views)} views, ${fmt(s.total.clones)} clones.`;
+  if (!s.first) t += ' No traffic stored for this period.';
+  else if (period !== 'all' && s.first > s.start) t += ` Stored history only goes back to ${s.first}; refresh regularly to build it up.`;
+  return `<p class="muted period-note">${esc(t)}</p>`;
+}
+function chartPanel(title, id, fulls){
+  const s = series(fulls);
+  return `<div class="panel"><h2>${title} ${chartControls()}</h2>${chartBox(id, s)}${periodNote(s)}</div>`;
+}
+
+function table(id, cols, rows, defSort){
+  const st = sortState[id] || (sortState[id] = {...defSort});
+  const sorted = [...rows].sort((a, b) => {
+    const va = a[st.key], vb = b[st.key];
+    const r = (typeof va === 'number' && typeof vb === 'number') ? va - vb : String(va ?? '').localeCompare(String(vb ?? ''));
+    return st.dir * r;
+  });
+  const head = cols.map(c => `<th class="${c.num ? 'num' : ''}" data-key="${c.key}">${esc(c.label)}${st.key === c.key ? (st.dir < 0 ? ' ▾' : ' ▴') : ''}</th>`).join('');
+  const body = sorted.length
+    ? sorted.map(r => `<tr>${cols.map(c => `<td class="${c.num ? 'num' : ''} ${c.clip ? 'clip' : ''}"${c.clip ? ` title="${esc(r[c.key])}"` : ''}>${c.render ? c.render(r) : esc(r[c.key])}</td>`).join('')}</tr>`).join('')
+    : `<tr><td colspan="${cols.length}" class="muted">No data</td></tr>`;
+  return `<div class="tscroll"><table data-tid="${id}"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+function chartBox(id, s){ pending.push({id, s}); return `<div class="chart-wrap"><canvas id="${id}"></canvas></div>`; }
+function drawCharts(){
+  charts.forEach(c => c.destroy()); charts = [];
+  if (!window.Chart){ pending = []; return; }
+  const cs = getComputedStyle(document.documentElement);
+  const muted = cs.getPropertyValue('--muted').trim(), border = cs.getPropertyValue('--border').trim();
+  for (const {id, s} of pending){
+    const el = $(id); if (!el) continue;
+    charts.push(new Chart(el, {
+      type: 'line',
+      data: {labels: s.labels, datasets: [
+        {label:'Views', data:s.views, borderColor:'#2f6fde', backgroundColor:'rgba(47,111,222,.15)', fill:true, tension:.25, pointRadius:2},
+        {label: group === 'day' ? 'Unique visitors' : 'Unique visitors (sum of daily)', data:s.uniques, borderColor:'#1a9a6c', tension:.25, pointRadius:2},
+        {label:'Clones', data:s.clones, borderColor:'#d08a1e', borderDash:[4,3], tension:.25, pointRadius:2}]},
+      options: {maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
+        plugins:{legend:{labels:{color:muted}}},
+        scales:{x:{ticks:{color:muted, maxRotation:0, autoSkip:true}, grid:{color:border}},
+                y:{beginAtZero:true, ticks:{color:muted, precision:0}, grid:{color:border}}}}
+    }));
+  }
+  pending = [];
+}
+
+/* ---------- views ---------- */
+function renderList(){
+  const f = $('filter').value.toLowerCase();
+  const repos = data ? [...data.repos].sort((a, b) => b.views - a.views || a.name.localeCompare(b.name)) : [];
+  $('repoList').innerHTML =
+    `<div class="repo-item ${selected ? '' : 'active'}" data-repo=""><span>All repositories</span><span class="n">${data ? fmt(totals(data.repos).views) : ''}</span></div>` +
+    repos.filter(r => r.full.toLowerCase().includes(f)).map(r =>
+      `<div class="repo-item ${selected === r.full ? 'active' : ''}" data-repo="${esc(r.full)}" title="${esc(r.full)}"><span>${esc(r.name)}</span><span class="n">${r.error ? '–' : fmt(r.views)}</span></div>`).join('');
+}
+
+function overviewView(){
+  const R = data.repos, t = totals(R), hp = !!prev, p = prev?.totals || {};
+  const refs = aggRefs(R);
+  const paths = R.flatMap(r => r.paths.map(x => ({...x, repo:r.name, full:r.full})));
+  const showPeriod = period !== '14';
+  const rows = R.map(r => {
+    const row = {...r, topRef: r.referrers.slice().sort((a, b) => b.count - a.count)[0]?.referrer || ''};
+    if (showPeriod){ const t = series([r.full]).total; row.pViews = t.views; row.pClones = t.clones; }
+    return row;
+  });
+  const periodCols = showPeriod ? [
+    {key:'pViews', label:`Views (${PERIODS[period]})`, num:true, render:r => fmt(r.pViews)},
+    {key:'pClones', label:`Clones (${PERIODS[period]})`, num:true, render:r => fmt(r.pClones)}] : [];
+  const errs = R.filter(r => r.error).length;
+  return `
+  <div class="cards">
+    ${card('Repositories', t.repos, p.repos, hp)}
+    ${card('Views (14d)', t.views, p.views, hp)}
+    ${card('Unique visitors*', t.uniques, p.uniques, hp)}
+    ${card('Clones (14d)', t.clones, p.clones, hp)}
+    ${card('Unique cloners*', t.cloneUniques, p.cloneUniques, hp)}
+    ${card('Repos with views', t.active, p.active, hp)}
+    ${card('Stars', t.stars, p.stars, hp)}
+  </div>
+  ${chartPanel('Traffic across all repositories', 'chAll', R.map(r => r.full))}
+  <div class="grid2">
+    <div class="panel"><h2>Top referrers, all repos</h2>${table('ovRefs', [
+      {key:'referrer', label:'Referrer', clip:true},
+      {key:'count', label:'Views', num:true, render:x => fmt(x.count) + diff(x.count, prev?.refs?.[x.referrer], hp)},
+      {key:'uniques', label:'Uniques*', num:true, render:x => fmt(x.uniques)},
+      {key:'repos', label:'Repos', num:true},
+      {key:'top', label:'Top repo', clip:true, render:x => repoLink(x.topFull, x.top)}
+    ], refs, {key:'count', dir:-1})}</div>
+    <div class="panel"><h2>Top content, all repos</h2>${table('ovPaths', [
+      {key:'path', label:'Path', clip:true, render:x => pathLink(x.path)},
+      {key:'count', label:'Views', num:true, render:x => fmt(x.count)},
+      {key:'uniques', label:'Uniques', num:true, render:x => fmt(x.uniques)}
+    ], paths, {key:'count', dir:-1})}</div>
+  </div>
+  <div class="panel"><h2>Repositories</h2>${table('ovRepos', [
+    {key:'name', label:'Repository', render:r => repoLink(r.full, r.name) + (r.error ? ` <span class="muted">(${esc(r.error)})</span>` : '')},
+    {key:'views', label:'Views (14d)', num:true, render:r => fmt(r.views) + diff(r.views, prev?.repos?.[r.full]?.views, hp)},
+    {key:'uniques', label:'Uniques', num:true, render:r => fmt(r.uniques) + diff(r.uniques, prev?.repos?.[r.full]?.uniques, hp)},
+    {key:'clones', label:'Clones (14d)', num:true, render:r => fmt(r.clones) + diff(r.clones, prev?.repos?.[r.full]?.clones, hp)},
+    {key:'cloneUniques', label:'Cloners', num:true, render:r => fmt(r.cloneUniques)},
+    ...periodCols,
+    {key:'stars', label:'Stars', num:true, render:r => fmt(r.stars) + diff(r.stars, prev?.repos?.[r.full]?.stars, hp)},
+    {key:'topRef', label:'Top referrer', clip:true}
+  ], rows, {key:'views', dir:-1})}</div>
+  <p class="muted">* Summed per repository. GitHub doesn't deduplicate visitors across repos. Referrers and content are each repo's top 10 over the last 14 days.
+  ${errs ? errs + ' repo(s) returned no traffic data.' : ''} Changes are compared with the previous refresh. Last refresh ${esc(new Date(data.fetchedAt).toLocaleString())}.</p>`;
+}
+
+function repoView(r){
+  const pr = prev?.repos?.[r.full], hp = !!pr, p = pr || {};
+  return `
+  <div class="panel" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <div><b style="font-size:16px">${esc(r.full)}</b> ${r.private ? '<span class="muted">· private</span>' : ''} ${r.archived ? '<span class="muted">· archived</span>' : ''} ${r.fork ? '<span class="muted">· fork</span>' : ''}</div>
+    <div><a href="${esc(r.url)}" target="_blank" rel="noopener">Repository</a> · <a href="${esc(r.url)}/graphs/traffic" target="_blank" rel="noopener">GitHub traffic page</a></div>
+  </div>
+  ${r.error ? `<div class="panel muted">No traffic data: ${esc(r.error)}</div>` : ''}
+  <div class="cards">
+    ${card('Views (14d)', r.views, p.views, hp)}
+    ${card('Unique visitors', r.uniques, p.uniques, hp)}
+    ${card('Clones (14d)', r.clones, p.clones, hp)}
+    ${card('Unique cloners', r.cloneUniques, p.cloneUniques, hp)}
+    ${card('Stars', r.stars, p.stars, hp)}
+    ${card('Forks', r.forks)}
+  </div>
+  ${chartPanel('Traffic', 'chRepo', [r.full])}
+  <div class="grid2">
+    <div class="panel"><h2>Referring sites</h2>${table('rRefs', [
+      {key:'referrer', label:'Referrer', clip:true},
+      {key:'count', label:'Views', num:true, render:x => fmt(x.count) + diff(x.count, pr?.refs?.[x.referrer], hp)},
+      {key:'uniques', label:'Uniques', num:true, render:x => fmt(x.uniques)}
+    ], r.referrers, {key:'count', dir:-1})}</div>
+    <div class="panel"><h2>Popular content</h2>${table('rPaths', [
+      {key:'path', label:'Path', clip:true, render:x => pathLink(x.path)},
+      {key:'title', label:'Title', clip:true},
+      {key:'count', label:'Views', num:true, render:x => fmt(x.count)},
+      {key:'uniques', label:'Uniques', num:true, render:x => fmt(x.uniques)}
+    ], r.paths, {key:'count', dir:-1})}</div>
+  </div>`;
+}
+
+function render(){
+  renderList();
+  const m = $('main');
+  if (!data){
+    charts.forEach(c => c.destroy()); charts = [];
+    m.innerHTML = '<div class="empty">Enter a GitHub token with access to your repositories and press Refresh.</div>';
+    return;
+  }
+  const repo = selected && data.repos.find(r => r.full === selected);
+  if (!repo) selected = null;
+  pending = [];
+  m.innerHTML = repo ? repoView(repo) : overviewView();
+  drawCharts();
+}
+
+/* ---------- events ---------- */
+$('main').addEventListener('click', e => {
+  const th = e.target.closest('th[data-key]');
+  if (th){
+    const st = sortState[th.closest('table').dataset.tid], k = th.dataset.key;
+    if (st.key === k) st.dir *= -1; else { st.key = k; st.dir = th.classList.contains('num') ? -1 : 1; }
+    render(); return;
+  }
+  const pb = e.target.closest('[data-period]');
+  if (pb){ period = pb.dataset.period; ls.set(LS.period, period); render(); return; }
+  const gb = e.target.closest('[data-group]');
+  if (gb){ group = gb.dataset.group; ls.set(LS.group, group); render(); return; }
+  const rl = e.target.closest('[data-repo]');
+  if (rl){ selected = rl.dataset.repo || null; render(); window.scrollTo(0, 0); }
+});
+$('repoList').addEventListener('click', e => {
+  const it = e.target.closest('[data-repo]');
+  if (it){ selected = it.dataset.repo || null; render(); window.scrollTo(0, 0); }
+});
+$('filter').addEventListener('input', renderList);
+$('refresh').addEventListener('click', refresh);
+$('saveToken').addEventListener('click', () => { ls.set(LS.token, $('token').value.trim()); setStatus('Token saved in this browser'); });
+$('incForks').checked = ls.get(LS.forks, false);
+$('incForks').addEventListener('change', () => ls.set(LS.forks, $('incForks').checked));
+$('token').value = ls.get(LS.token, '');
+
+$('exportBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify({version:1, exportedAt:new Date().toISOString(), history:hist, data, prev})], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'github-traffic-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+$('importBtn').addEventListener('click', () => $('importFile').click());
+$('importFile').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const j = JSON.parse(await f.text());
+    for (const [full, o] of Object.entries(j.history || {})){
+      const t = hist[full] || (hist[full] = {v:{}, c:{}});
+      for (const k of ['v', 'c']) for (const [d, val] of Object.entries(o[k] || {})) if (!t[k][d]) t[k][d] = val;
+    }
+    ls.set(LS.hist, hist);
+    if (!data && j.data){ data = j.data; prev = j.prev || null; ls.set(LS.data, data); ls.set(LS.prev, prev); }
+    render();
+    setStatus('History imported and merged');
+  } catch(err){ setStatus('Import failed: ' + err.message); }
+  e.target.value = '';
+});
+
+render();
+if (data) setStatus('Last refresh ' + new Date(data.fetchedAt).toLocaleString());
+</script>
+</body>
+</html>
