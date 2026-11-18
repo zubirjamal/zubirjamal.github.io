@@ -61,6 +61,11 @@ Local environmental data and localized automation give your home actionable cont
 * **[HA AI Cost Meter](https://github.com/kucau0901/ha-ai-cost-meter) (by Dr Yusri Salleh):** Exact provider-reported AI token usage and shadow cost metering for LLM integrations running inside Home Assistant.
 * **[Plate Recognizer](https://github.com/zubir2k/homeassistant-platerecognizer) (by Zubir Jamal):** License plate recognition (ALPR/ANPR) using camera snapshots. Seamlessly automate autogate triggers for family cars and log visitor vehicle arrivals.
 
+### 6. Hardware Hacks & Just for Fun 🧸
+
+Because smart home automations don't always have to be about electricity bills and utility meters!
+* **[Furby Connect](https://github.com/zubir2k/homeassistant-furbyconnect) (by Zubir Jamal):** Brought your dusty 2016 Hasbro Furby Connect out of storage and into Home Assistant via Bluetooth Low Energy (BLE). Control reactions, sounds, and make it speak or react to your home automations.
+
 ## How to Install These
 
 Most of these are available as Custom Components via the Home Assistant Community Store (HACS). You don't need to be a developer to use them; you just need to be a DIYer who knows how to add a GitHub repository to your setup.
